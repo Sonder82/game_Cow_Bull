@@ -11,6 +11,7 @@ public class StartUI {
     private static final String FILE_NAME = "data/gameRule.txt";
     private static final String BULL = "b ";
     private static final String COW = "k";
+    private static final int COUNT_BULL = 4;
 
     private final Scanner scanner;
 
@@ -51,10 +52,18 @@ public class StartUI {
         System.out.println("Первый игрок введите четырехзначное число."
                 + " Все четыре числа должны быть разными");
         int userFirst = checkDigital();
-        System.out.println("Второй игрок введите четырехзначное число."
-                + " Все четыре числа должны быть разными");
-        int userSecond = checkDigital();
-        countDigital(userFirst, userSecond);
+        int count = 0;
+        boolean win = false;
+        while (!win) {
+            count++;
+            System.out.println("Второй игрок введите четырехзначное число."
+                    + " Все четыре числа должны быть разными");
+            int userSecond = checkDigital();
+            int rsl = countDigital(userFirst, userSecond, count);
+            if (rsl == COUNT_BULL) {
+                win = true;
+            }
+        }
     }
 
     /**
@@ -96,16 +105,16 @@ public class StartUI {
      * @param a число
      * @param b число
      */
-    private void countDigital(int a, int b) {
+    private int countDigital(int a, int b, int count) {
+        int bulls = 0;
+        int cows = 0;
         if (a == b) {
-            System.out.println("Число угадано!");
+            System.out.println("Число угадано! Количество попыток: " + count);
+            bulls = COUNT_BULL;
         } else {
             StringBuilder stringBuilder = new StringBuilder();
             String[] first = String.valueOf(a).split("");
             String[] second = String.valueOf(b).split("");
-
-            int bulls = 0;
-            int cows = 0;
 
             for (int i = 0; i < first.length; i++) {
                 for (int j = 0; j < second.length; j++) {
@@ -120,6 +129,7 @@ public class StartUI {
             }
             System.out.println(stringBuilder.append(bulls).append(BULL).append(cows).append(COW));
         }
+        return bulls;
     }
 
     /**
