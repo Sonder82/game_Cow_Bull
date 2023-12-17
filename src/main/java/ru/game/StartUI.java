@@ -47,6 +47,7 @@ public class StartUI {
 
     /**
      * Метод в котором выполняется ввод четырехзначных чисел игроками.
+     * Непосредственно сама логика игры
      */
     public void playGame() {
         Scanner input = new Scanner(System.in);
@@ -146,7 +147,7 @@ public class StartUI {
     }
 
     /**
-     * Метод запуска меню Старт игры
+     * Метод запуска меню игры
      */
     public void start() {
         Scanner input = new Scanner(System.in);
