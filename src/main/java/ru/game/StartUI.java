@@ -49,18 +49,31 @@ public class StartUI {
      * Метод в котором выполняется ввод четырехзначных чисел игроками.
      */
     public void playGame() {
-        System.out.println("Первый игрок введите четырехзначное число."
+        Scanner input = new Scanner(System.in);
+        System.out.println("Первый игрок введите имя: ");
+        String nameFirst = input.nextLine();
+        System.out.println(nameFirst + " введите четырехзначное число."
                 + " Все четыре числа должны быть разными");
-        int userFirst = checkDigital();
+        int checkFirst = checkDigital();
+        System.out.println("Второй игрок введите имя: ");
+        String nameSecond = input.nextLine();
+        System.out.println(nameSecond + " введите четырехзначное число."
+                + " Все четыре числа должны быть разными");
+        int checkSecond = checkDigital();
         int count = 0;
         boolean win = false;
         while (!win) {
             count++;
-            System.out.println("Второй игрок введите четырехзначное число."
-                    + " Все четыре числа должны быть разными");
-            int userSecond = checkDigital();
-            int rsl = countDigital(userFirst, userSecond, count);
-            if (rsl == COUNT_BULL) {
+            System.out.println("Ход первого игрока: " + nameFirst);
+            int attemptFirst = checkDigital();
+            int rslFirst = countDigital(checkSecond, attemptFirst, count, nameFirst);
+            if (rslFirst == COUNT_BULL) {
+                break;
+            }
+            System.out.println("Ход второго игрока: " + nameSecond);
+            int attemptSecond = checkDigital();
+            int rslSecond = countDigital(checkFirst, attemptSecond, count, nameSecond);
+            if (rslSecond == COUNT_BULL) {
                 win = true;
             }
         }
@@ -105,11 +118,11 @@ public class StartUI {
      * @param a число
      * @param b число
      */
-    private int countDigital(int a, int b, int count) {
+    private int countDigital(int a, int b, int count, String userName) {
         int bulls = 0;
         int cows = 0;
         if (a == b) {
-            System.out.println("Число угадано! Количество попыток: " + count);
+            System.out.println("Число угадано! Победитель: " + userName + " Количество попыток: " + count);
             bulls = COUNT_BULL;
         } else {
             StringBuilder stringBuilder = new StringBuilder();
